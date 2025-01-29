@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>赛博烟花</title>
+    <script type="module" src="https://unpkg.com/sober@1.0.6/dist/main.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <script>
+        var width = 3; // 图片宽度
+        var height = 10; // 图片高度
+        var id = 0; // 图片ID
+        var min = 0; // 最小偏移量
+        var max = 100; // 最大偏移量
+
+        function randint(min, max) {
+            // 生成一个介于 min 和 max 之间的随机整数
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        function createImage(src, width, height, id, leftVw = 0) {
+            // 创建一个新的 img 元素
+            const img = document.createElement('img');
+
+            // 设置 img 的属性
+            img.src = src; // 图片地址
+            img.width = width; // 图片宽度
+            img.height = height; // 图片高度
+            img.alt = 'invalid image'; // 设置 alt 属性
+            img.id = id; // 设置图片的 ID
+            img.className = 'firework'; // 设置默认的 class
+
+            // 设置初始位置（使用绝对定位，左偏移单位为 vw）
+            img.style.position = 'absolute';
+            img.style.left = `${leftVw}vw`; // 初始左位置，单位为 vw
+            img.style.bottom = '0'; // 初始底部位置
+
+            // 将 img 添加到页面中（例如插入到某个容器里）
+            const container = document.getElementById('overlay');
+            container.appendChild(img);
+			img.addEventListener('animationend', () => {
+                // 创建一个新的 img 元素
+            const light = document.createElement('img');
+
+            // 设置 img 的属性
+            light.src = src; // 图片地址
+            light.width = 50
+            light.height = 50
+            light.alt = 'invalid image'; // 设置 alt 属性
+            light.className = 'explosion'; // 设置默认的 class
+
+            // 设置初始位置（使用绝对定位，左偏移单位为 vw）
+            light.style.position = 'absolute';
+            light.style.left = `${leftVw}vw`; // 初始左位置，单位为 vw
+            light.style.top = '7vw'; // 初始顶部位置
+
+            // 将 img 添加到页面中（例如插入到某个容器里）
+            const container = document.getElementById('overlay');
+            container.appendChild(light);
+			light.addEventListener('animationend', () => {
+                light.remove();
+            });
+						img.remove();
+								
+            });
+        }
+    </script>
+
+    <div class="overlay" id="overlay"></div>
+
+    <s-button class="buttonMain" onclick="createFirework()">
+        生成烟花
+    </s-button>
+
+    <s-drawer id="menu" style="height: 100vw;">
+        <div slot="start" id="menuD">
+            <!-- 抽屉菜单的内容 -->
+            <br>
+            <s-menu style="max-width: 50vw">
+                <div slot="label">设置</div>
+                <s-menu-item checked="true">
+                    <s-icon slot="start" name="home"></s-icon>
+                    什么也没有，摆了
+                </s-menu-item>
+        </div>
+    </s-drawer>
+
+    <!-- 控制抽屉菜单显示/隐藏的按钮 -->
+    <s-icon-button class="buttonMenu" onclick="document.querySelector('#menu').toggle()">
+        <s-icon name="menu"></s-icon>
+    </s-icon-button>
+
+    <script>
+        function createFirework() {
+            const imageId = id; // 使用当前 id 作为图片的 ID
+            createImage('firework.png', width, height, imageId, randint(min, max)); // 创建图片
+            id++; // 增加 id，避免重复
+        }
+    </script>
+</body>
+</html>

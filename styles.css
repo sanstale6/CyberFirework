@@ -1,0 +1,105 @@
+/* 样式重置 */
+html, body {
+    background-color: black;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden; /* 禁用滚动条 */
+}
+
+/* 按钮样式 */
+.buttonMain {
+    position: fixed;
+    bottom: 20px; /* 距离底部 20px */
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(30vw, 300px);
+    z-index: 1;
+}
+
+@media (max-width: 768px) {
+    .buttonMain {
+        width: 30vw; /* 响应式调整宽度 */
+    }
+}
+
+.buttonMenu {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    margin: 0;
+    width: 10vw;
+}
+
+#menuD {
+    top:0vw;
+    height:100vw;
+    width: 50vw;
+    z-index: 100;
+}
+
+/* 烟花容器样式 */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0); /* 完全透明 */
+    z-index: 1000;
+    pointer-events: none; /* 防止遮挡下层操作 */
+}
+
+/* 烟花图片样式 */
+.firework {
+  	position:relative;
+    animation-iteration-count: 1;
+  	animation:fly 0.6s,glow 0.3s infinite alternate;
+    animation-timing-function:linear;
+    background-color: white;
+    border-radius: 50%; /* 使元素呈圆形 */
+    box-shadow: 0 0 100px 50px rgba(255, 255, 255, 0.7); /* 初始发光效果 */
+}
+.explosion {
+  	position:relative;
+    animation-iteration-count: 1;
+  	animation:explode 1s;
+    animation-timing-function:linear;
+    background-color: white;
+    transform: translate(-50%, -50%);
+    border-radius: 50%; /* 使元素呈圆形 */
+    box-shadow: 0 0 100px rgba(255, 255, 255, 0.7) !important; /* 初始发光效果 */
+}
+@keyframes fly
+{
+from {top:100vw;}
+to {top:7vw;}
+}
+@keyframes glow {
+  0% {
+    box-shadow: 0 0 100px 50px rgba(255, 255, 255, 0.7);
+  }
+  100% {
+    box-shadow: 0 0 200px 50px rgba(255, 255, 255, 1), /* 增强发光效果 */
+                0 0 300px 50px rgba(255, 255, 255, 1),
+                0 0 400px 50px rgba(255, 255, 255, 0.8);
+  }
+}
+@keyframes explode {
+  0% {
+    width: 50px;
+    height: 50px;
+    opacity: 0.5;
+  }
+  10% {
+    width: 150px;
+    height: 150px;
+    opacity: 0.5;
+  }
+  100% {
+    width: 150px;
+    height: 150px;
+    opacity: 0;
+  }
+}
